@@ -36,6 +36,15 @@ public class RoomNodeGraphEditor : EditorWindow // making class inherit from the
         EditorGUILayout.LabelField("Node1"); // labels in the Unity Editor
         GUILayout.EndArea(); // closes the gui drawing
 
+
+        GUILayout.BeginArea(new Rect(new Vector2(300f, 300f), new Vector2(nodeWidth, nodeHeight)), roomNodeStyle);
+        // creates a new layout, specifies it will be a rectangle composed of 2 vector dimensions
+        // 1 position vector for starting position, and one size vector to specify dimension of gui layout
+        // passes in the gui style to finish it
+
+        EditorGUILayout.LabelField("Node2"); // labels in the Unity Editor
+        GUILayout.EndArea(); // closes the gui drawing
+
         // Debug.Log("Room Node Graph Editor"); // to log things in the Unity Editor console
     }
 
