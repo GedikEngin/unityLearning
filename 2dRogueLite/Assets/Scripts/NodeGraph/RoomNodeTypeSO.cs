@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RoomNodeType_", menuName = "Scriptable Objects/Dungeon/Room Node Type")]
 public class RoomNodeTypeSO : ScriptableObject
 {
-    public string RoomNodeTypeName; // name of room type, boss, entrance, reward, store etc
+    public string roomNodeTypeName; // name of room type, boss, entrance, reward, store etc
 
     public bool displayInNodeGraphEditor = true; // display in room node graph editor when true, we are default setting it to true
                                                  // it can sometimes be false for example entrance, where it is auto generated at the start so we wont see it in editor
@@ -22,7 +22,7 @@ public class RoomNodeTypeSO : ScriptableObject
 #if UNITY_EDITOR // only runs if we are in unity engine
     private void OnValidate() // built in function to unity, unity calls it when a value changes or the script loads
     {
-        HelperUtilities.ValidateCheckEmptyString(this, nameof(RoomNodeTypeName), RoomNodeTypeName);
+        HelperUtilities.ValidateCheckEmptyString(this, nameof(roomNodeTypeName), roomNodeTypeName);
         // it calls our validation method 
         // passing in the scope we are working with
         // the name of the item we are checking 

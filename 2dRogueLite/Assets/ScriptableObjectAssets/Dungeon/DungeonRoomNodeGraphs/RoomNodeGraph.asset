@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f125c9d67340764594ac1485421f629, type: 3}
+  m_Name: RoomNodeGraph
+  m_EditorClassIdentifier: 
+  roomNodeTypeList: {fileID: 0}
+  roomNodeList:
+  - {fileID: 1326432282790168678}
+  - {fileID: 5090496165095972496}
+--- !u!114 &1326432282790168678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57160fff2788a6849a0fe8f09445da6f, type: 3}
+  m_Name: RoomNode
+  m_EditorClassIdentifier: 
+  id: 5e8e6802-c25c-4105-923d-07ae12f239de
+  parentRoomNodeIDList: []
+  childRoomNodeIDList: []
+  roomNodeGraph: {fileID: 11400000}
+  roomNodeType: {fileID: 11400000, guid: 64fc1fe6ff89ce04f95af4165e00e92b, type: 2}
+  roomNodeTypeList: {fileID: 11400000, guid: 80755c0647ac0ad4a9ecb95562dc2cf9, type: 2}
+  rect:
+    serializedVersion: 2
+    x: 344
+    y: 99
+    width: 160
+    height: 75
+--- !u!114 &5090496165095972496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57160fff2788a6849a0fe8f09445da6f, type: 3}
+  m_Name: RoomNode
+  m_EditorClassIdentifier: 
+  id: 9624a65f-9648-464d-81f9-60554823535b
+  parentRoomNodeIDList: []
+  childRoomNodeIDList: []
+  roomNodeGraph: {fileID: 11400000}
+  roomNodeType: {fileID: 11400000, guid: 69599bf914331f2498e799d166444b36, type: 2}
+  roomNodeTypeList: {fileID: 11400000, guid: 80755c0647ac0ad4a9ecb95562dc2cf9, type: 2}
+  rect:
+    serializedVersion: 2
+    x: 449
+    y: 211
+    width: 160
+    height: 75
