@@ -11,12 +11,12 @@ using UnityEngine.SceneManagement;
 public class RoomNodeGraphSO : ScriptableObject // MonoBehaviour -> scriptable object is where it inherits
 {
 
-// adding core member variables
+    // adding core member variables
 
-[HideInInspector] public RoomNodeTypeListSO roomNodeTypeList;
-// room node type list, list of roomNode types
-[HideInInspector] public List<RoomNodeSO> roomNodeList = new List<RoomNodeSO>();
-// initializing the new RoomNodeSO list
-[HideInInspector] public Dictionary<string, RoomNodeSO> roomNodeDictionary = new Dictionary<string, RoomNodeSO>();
-// creates a new dictionary composed of strings to be the GUID for roomNodes
+    [HideInInspector] public RoomNodeTypeListSO roomNodeTypeList;
+    // room node type list, list of roomNode types
+    [HideInInspector] public List<RoomNodeSO> roomNodeList = new List<RoomNodeSO>();
+    // initializing the new RoomNodeSO list
+    [HideInInspector] public Dictionary<string, RoomNodeSO> roomNodeDictionary = new Dictionary<string, RoomNodeSO>();
+    // creates a new dictionary composed of strings to be the GUID for roomNodes
 }

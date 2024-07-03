@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor; // built in user directive
+using UnityEditor.Callbacks; // namespace for detecting changes in the editor and capturing call backs
 
 public class RoomNodeGraphEditor : EditorWindow // making class inherit from the editor window
 {
 
     private GUIStyle roomNodeStyle; // to define a new gui style for roomNode
+    private static RoomNodeGraphSO currentRoomNodeGraph; // sets the current room node graph variable
 
     private const float nodeWidth = 160; // change to 160f if broken
     private const float nodeHeight = 75; // change to 75f if broken 
@@ -15,19 +17,54 @@ public class RoomNodeGraphEditor : EditorWindow // making class inherit from the
 
     [MenuItem("Room Node Graph Editor", menuItem = "Window/Dungeon Editor/Room Node Graph Editor")] // when opened it will open the room node graph editor
 
-    private static void OpenWindow(){ // static function, complies with MenuItem
+
+    private static void OpenWindow()
+    { // static function, complies with MenuItem
         GetWindow<RoomNodeGraphEditor>("Room Node Graph Editor"); // it will return the first editor window of specified type <RoomNodeGraphEditor>
     }
 
-    private void OnEnable() {
+
+    private void OnEnable()
+    {
         roomNodeStyle = new GUIStyle(); // starts tailoring the gui style
         roomNodeStyle.normal.background = EditorGUIUtility.Load("node1") as Texture2D; // background, node0,1,2.. are different textures
         roomNodeStyle.normal.textColor = Color.white; // text color
         roomNodeStyle.padding = new RectOffset(nodePadding, nodePadding, nodePadding, nodePadding); // padding offset, inside gui element
-        roomNodeStyle.border = new RectOffset(nodeBorder, nodeBorder, nodeBorder, nodeBorder  ); // border offset, outside gui element
+        roomNodeStyle.border = new RectOffset(nodeBorder, nodeBorder, nodeBorder, nodeBorder); // border offset, outside gui element
     }
 
-    private void OnGUI(){
+    // open the room node graph editor window if a room node graph scriptable object asset is double clicked in the inspector
+
+    [OnOpenAsset(0)] // needs the namespace UnityEditor.Callbacks
+    // the 0 allows you to specify more than one method to call when the asset is double clicked
+    // 0 means the functions with onOpenAsset(0) will all be called, 
+
+
+    public static bool OnDoubleClickAsset(int instanceID, int line)
+    {
+        RoomNodeGraphSO roomNodeGraph = EditorUnity.InstanceIDToObject(instanceID) as RoomNodeGraphSO;
+        // determines if the item clicked on is a room node graph scriptable object asset
+        // Unity class - editor utility
+        // changes instanceID to an object
+        // passing instance id, giving it type RoomNodeGraphSO and assigning it to roomNodeGraph
+        // if the item that is clicked is a room node graph, it will be populated, otherwise it will be null
+
+        // now it needs to be checked if its null or not
+
+        if (roomNodeGraph != null // checks if its null or not, if not null it means there is a valid roomNodeGraph
+        )
+        {
+            OpenWindow(); // opens the window for roomNodeGraph
+            currentRoomNodeGraph = roomNodeGraph; // the roomNodeGraph that was clicked on is now the current roomNodeGraph
+
+            return true; //return true if window can be opened
+        }
+        return false; // false if method cannot be handled
+    }
+
+
+    private void OnGUI()
+    {
         GUILayout.BeginArea(new Rect(new Vector2(100f, 100f), new Vector2(nodeWidth, nodeHeight)), roomNodeStyle);
         // creates a new layout, specifies it will be a rectangle composed of 2 vector dimensions
         // 1 position vector for starting position, and one size vector to specify dimension of gui layout
