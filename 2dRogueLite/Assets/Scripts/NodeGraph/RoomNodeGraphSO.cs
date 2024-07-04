@@ -21,15 +21,32 @@ public class RoomNodeGraphSO : ScriptableObject // MonoBehaviour -> scriptable o
     [HideInInspector] public Dictionary<string, RoomNodeSO> roomNodeDictionary = new Dictionary<string, RoomNodeSO>();
     // creates a new dictionary composed of strings to be the GUID for roomNodes
 
+    private void Awake() // triggers the loading of the dictionary
+    {
+        LoadRoomNodeDictionary();
+    }
+
+    private void LoadRoomNodeDictionary() // load the room node dictionary from the room node list
+    {
+        roomNodeDictionary.Clear();
+
+        // populating the dict
+
+        foreach (RoomNodeSO node in roomNodeList) // goes through all of the rooms in the list of nodes
+        {
+            roomNodeDictionary[node.id] = node; // adds them to the dictionary using their ids and maps it to their name
+        }
+    }
+
 #if UNITY_EDITOR
 
     [HideInInspector] public RoomNodeSO roomNodeToDrawLineFrom = null; // the room node to start drawing the line from
     [HideInInspector] public Vector2 linePosition; // a vector variable to store the end position of the drawn line
 
-    // public void OnValidate()
-    // {
-    //     LoadRoomNodeDictionary(); // comment
-    // }
+    public void OnValidate()
+    {
+        LoadRoomNodeDictionary(); // repopulates the dictionary every time there is a change made in the editor
+    }
 
     public void SetNodeToDrawConnectionLineFrom(RoomNodeSO node, Vector2 position) // function that takes in to set the origin node using the 2 member functions above
     {

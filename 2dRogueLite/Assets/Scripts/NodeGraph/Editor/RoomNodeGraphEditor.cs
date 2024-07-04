@@ -81,6 +81,9 @@ public class RoomNodeGraphEditor : EditorWindow // making class inherit from the
 
             ProcessEvents(Event.current); // processes changes and events
 
+            // drawing connections before nodes to the node boxes are over them
+            DrawRoomConnections();
+
             DrawRoomNodes(); // draws the changes
 
         }
@@ -202,7 +205,8 @@ public class RoomNodeGraphEditor : EditorWindow // making class inherit from the
         // in this case it looks for a roomNodeTypeList, where it has the is none property and returns that
     }
 
-    private void CreateRoomNode(object mousePositionObject, RoomNodeTypeSO roomNodeType) // overloads CreateRoomNode as it has diff. params
+    private void CreateRoomNode(object mousePositionObject, RoomNodeTypeSO roomNodeType)
+    // overloads CreateRoomNode as it has diff. params
     // function to create a room node at mouse, overloaded to pass in room type
     {
         Vector2 mousePosition = (Vector2)mousePositionObject;
@@ -222,6 +226,8 @@ public class RoomNodeGraphEditor : EditorWindow // making class inherit from the
         // saves changes in Unity editor and to the asset database
         AssetDatabase.SaveAssets();
 
+        // refreshes the graph node dictionary
+        currentRoomNodeGraph.OnValidate();
     }
 
     //     CreateRoomNode uses the first instance of the function to be triggered
@@ -288,6 +294,49 @@ public class RoomNodeGraphEditor : EditorWindow // making class inherit from the
         currentRoomNodeGraph.linePosition = Vector2.zero; // sets the length of the line to zero removing the line 
         GUI.changed = true;
     }
+
+    private void DrawRoomConnections()
+    {
+        // looping through all the nodes
+        foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+        {
+            // checks if there are child nodes in the list
+            if (roomNode.childRoomNodeIDList.Count > 0)
+            {
+                // loop through child nodes
+                foreach (string childRoomNodeID in roomNode.childRoomNodeIDList)
+                {
+                    // get child nodes from dict
+                    if (currentRoomNodeGraph.roomNodeDictionary.ContainsKey(childRoomNodeID))
+                    {
+                        // calls the drawing function
+                        DrawConnectionLine(roomNode, currentRoomNodeGraph.roomNodeDictionary[childRoomNodeID]);
+
+                        GUI.changed = true;
+                    }
+                }
+            }
+        }
+    }
+
+    private void DrawConnectionLine(RoomNodeSO parentRoomNode, RoomNodeSO childRoomNode) // function to draw the line between parent and child nodes
+    {
+        // gets the start and end position of the lines
+        Vector2 startPosition = parentRoomNode.rect.center;
+        Vector2 endPosition = childRoomNode.rect.center;
+
+        // drawing the line
+        Handles.DrawBezier(startPosition,
+        endPosition,
+        startPosition,
+        endPosition,
+        Color.white,
+        null,
+        connectingLineWidth);
+
+        GUI.changed = true;
+    }
+
 
     private void DrawRoomNodes()
     {
