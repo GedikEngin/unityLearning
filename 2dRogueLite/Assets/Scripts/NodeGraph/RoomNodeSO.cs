@@ -117,6 +117,7 @@ public class RoomNodeSO : ScriptableObject
         }
     }
 
+    #region mouseEvents
     private void ProcessMouseDownEvent(Event currentEvent)
     {
         // left click
@@ -126,13 +127,14 @@ public class RoomNodeSO : ScriptableObject
         }
     }
 
-
     private void ProcessLeftClickDownEvent()
     {
 
         Selection.activeObject = this;
 
         // Toggle node selection
+        // if clicked and it is selected, unselect it
+        // else select it
 
         if (isSelected == true)
         {
@@ -146,7 +148,6 @@ public class RoomNodeSO : ScriptableObject
 
     }
 
-
     private void ProcessMouseUpEvent(Event currentEvent)
     {
         // if left click up
@@ -159,37 +160,37 @@ public class RoomNodeSO : ScriptableObject
 
     private void ProcessLeftClickUpEvent()
     {
-        if (isLeftClickDragging)
+        if (isLeftClickDragging) // checks if dragging is on going after mouse up
         {
-            isLeftClickDragging = false;
+            isLeftClickDragging = false; // if it is, flags it to be turned off
         }
     }
 
     private void ProcessMouseDragEvent(Event currentEvent)
     {
-        if (currentEvent.button == 0)
+        if (currentEvent.button == 0) // checks if the event is a drag event from mouse 0 (left click)
         {
-            ProcessLeftMouseDownEvent(currentEvent);
+            ProcessLeftMouseDragEvent(currentEvent); // calls the drag event
         }
     }
 
-    private void ProcessLeftMouseDownEvent(currentEvent)
+    private void ProcessLeftMouseDragEvent(Event currentEvent)
     {
-        isLeftClickDragging = true;
+        isLeftClickDragging = true; // left dragging is toggled on
 
-        DragNode(currentEvent.delta);
+        DragNode(currentEvent.delta); // gets the active nodes position and adds the delta to it 
 
-        GUI.changed = true;
+        GUI.changed = true; // informs engine that ui has changed and to redraw 
 
     }
 
     public void DragNode(Vector2 delta)
     {
-        rect.position += delta;
-        EditorUtility.SetDirty(this);
+        rect.position += delta; // adds the change in the node to the location of the node in editor
+        EditorUtility.SetDirty(this); // informs unity something has changed and needs to be reprocessed
     }
 
-#endregion
+    #endregion
 
 #endif
 

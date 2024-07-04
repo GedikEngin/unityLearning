@@ -116,6 +116,7 @@ public class RoomNodeGraphEditor : EditorWindow // making class inherit from the
                 return currentRoomNodeGraph.roomNodeList[i]; // return the room node the mouse is over
             }
         }
+
         return null; // else return null as the mouse is not hovering over a room node
     }
 
