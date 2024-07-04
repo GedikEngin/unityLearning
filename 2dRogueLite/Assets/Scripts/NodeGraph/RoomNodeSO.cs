@@ -10,9 +10,15 @@ using System.Xml.Serialization;
 
 public class RoomNodeSO : ScriptableObject
 {
-    [HideInInspector] public string id; // GUID for the room node
-    [HideInInspector] public List<string> parentRoomNodeIDList = new List<string>(); // the list of parents for a RoomNode
-    [HideInInspector] public List<string> childRoomNodeIDList = new List<string>(); // list of children for a RoomNode
+    // [HideInInspector] public string id; // GUID for the room node
+    // [HideInInspector] public List<string> parentRoomNodeIDList = new List<string>(); // the list of parents for a RoomNode
+    // [HideInInspector] public List<string> childRoomNodeIDList = new List<string>(); // list of children for a RoomNode
+
+    // removing the HideInInspector allows us to see them in the unity inspector so we can view the relations
+    public string id; // GUID for the room node
+    public List<string> parentRoomNodeIDList = new List<string>(); // the list of parents for a RoomNode
+    public List<string> childRoomNodeIDList = new List<string>(); // list of children for a RoomNode
+
     [HideInInspector] public RoomNodeGraphSO roomNodeGraph; // variable containing roomNodeGraph
     public RoomNodeTypeSO roomNodeType; // variable containing roomNodeType
     [HideInInspector] public RoomNodeTypeListSO roomNodeTypeList; // list of roomNodeTypes
@@ -117,13 +123,17 @@ public class RoomNodeSO : ScriptableObject
         }
     }
 
-    #region mouseEvents
     private void ProcessMouseDownEvent(Event currentEvent)
     {
         // left click
         if (currentEvent.button == 0) // 0 means left mouse
         {
             ProcessLeftClickDownEvent();
+        }
+
+        else if (currentEvent.button == 1) // right mouse, not using else for middle mouse and side mouse buttons
+        {
+            ProcessRightClickDownEvent(currentEvent);
         }
     }
 
@@ -148,6 +158,12 @@ public class RoomNodeSO : ScriptableObject
 
     }
 
+    private void ProcessRightClickDownEvent(Event currentEvent) // right click
+    {
+        // calls the node drawing function passing in the "selected" node and the mouse position
+        roomNodeGraph.SetNodeToDrawConnectionLineFrom(this, currentEvent.mousePosition);
+    }
+
     private void ProcessMouseUpEvent(Event currentEvent)
     {
         // if left click up
@@ -165,6 +181,8 @@ public class RoomNodeSO : ScriptableObject
             isLeftClickDragging = false; // if it is, flags it to be turned off
         }
     }
+
+
 
     private void ProcessMouseDragEvent(Event currentEvent)
     {
@@ -190,7 +208,17 @@ public class RoomNodeSO : ScriptableObject
         EditorUtility.SetDirty(this); // informs unity something has changed and needs to be reprocessed
     }
 
-    #endregion
+    public bool AddChildRoomNodeIDToRoomNode(string childID) // adds the child nodes if to the list and returns true, otherwise returns false
+    {
+        childRoomNodeIDList.Add(childID);
+        return true;
+    }
+    public bool AddParentRoomNodeIDToRoomNode(string parentID) // adds parents id to the list, else return false if it cannot
+    {
+        parentRoomNodeIDList.Add(parentID);
+        return true;
+    }
+
 
 #endif
 

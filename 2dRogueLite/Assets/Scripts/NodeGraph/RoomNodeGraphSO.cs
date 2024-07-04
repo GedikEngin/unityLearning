@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,4 +20,22 @@ public class RoomNodeGraphSO : ScriptableObject // MonoBehaviour -> scriptable o
     // initializing the new RoomNodeSO list
     [HideInInspector] public Dictionary<string, RoomNodeSO> roomNodeDictionary = new Dictionary<string, RoomNodeSO>();
     // creates a new dictionary composed of strings to be the GUID for roomNodes
+
+#if UNITY_EDITOR
+
+    [HideInInspector] public RoomNodeSO roomNodeToDrawLineFrom = null; // the room node to start drawing the line from
+    [HideInInspector] public Vector2 linePosition; // a vector variable to store the end position of the drawn line
+
+    // public void OnValidate()
+    // {
+    //     LoadRoomNodeDictionary(); // comment
+    // }
+
+    public void SetNodeToDrawConnectionLineFrom(RoomNodeSO node, Vector2 position) // function that takes in to set the origin node using the 2 member functions above
+    {
+        roomNodeToDrawLineFrom = node;
+        linePosition = position;
+    }
+
+#endif
 }
